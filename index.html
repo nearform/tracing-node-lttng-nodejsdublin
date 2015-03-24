@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Node LTTNG</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Tracing Node on Linux with LTTNG</h1>
+		<p>@dberesford, nearForm.</p>
+    <p>
+	</header>
+	<section class="slide cover" id="Cover"><div>
+		<h2>Tracing Node on Linux with LTTNG</h2>
+		<p><a href="http://twitter.com/dberesford">Damian Beresford</a> - <a href="http://nearform.com">nearForm</a></p>
+		<p><a href="http://www.nodejsdublin.com/">Node JS Dublin - March 2015</a></p>
+    <p><a href="http://bit.ly/1GPk0cx">bit.ly/1GPk0cx</a></p>
+		<img src="pictures/spacex1.jpg" alt="">
+		<!--
+			To apply styles to the certain slides
+			set slide ID to get needed elements
+			-->
+		<style>
+			#Cover h2 {
+				margin:30px 0 0;
+				color:#FFF;
+				text-align:center;
+				font-size:70px;
+				}
+			#Cover p {
+				margin:10px 0 0;
+				text-align:center;
+				color:#FFF;
+				font-style:italic;
+				font-size:20px;
+				}
+				#Cover p a {
+					color:#FFF;
+					}
+		</style>
+  </div></section>
+	<section class="slide"><div>
+  <h2>Tracing</h2>
+    <blockquote>A specialised use of logging to record information about a programs execution</blockquote>
+		<ul>
+			<li>Used by Sys Admins for fault diagnosis</li>
+			<li>Used by Developers for debugging</li>
+      <li>Vs logging/event tracing: high level analysis of less frequent events</li>
+      <li>Tracing is low level, very high volume</li>
+      <li>Tracing is highly robust and non-invasive</li>
+      <li>Tracing can be turned on by demand</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+    <h2>Tracing - what it isn't</h2>
+		<ul>
+			<li>Not a debugger by itself, but can help with debugging..</li>
+			<li>Not a profiler, but can help with performance..</li>
+      <li>Not a logger, but can help with logging..</li>
+      <li>Like an x-ray/MRI of a running system</li>
+      <li>User apps and kernel can be traced together</li>
+		</ul>
+	</div></section>
+  <!-- TODO - need image here -->
+  <section class="slide"><div>
+    <h2> DTrace - the unicorn!</h2>
+		<ul>
+			<li>Solaris Dynamic Tracing Framework</li>
+			<li>'Combines system performance statistics, debugging information, and execution analysis into one tool'</li>
+      <li>D scripts.</li>
+      <li>Huge amount of development - very well marketed, release in 2005</li>
+      <li>Brendan Gregg - <a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+    <h2>Linux Tracing</h2>
+		<ul>
+			<li>dtrace envy..</li>
+			<li>kernel markers 2007, kprobes, uprobes</li>
+      <li>TRACE_EVENT macro</li>
+      <li>debugfs - ram based fs for debugging</li>
+      <li><code>sudo find /sys/kernel/debug/tracing/events -type d</code></li>
+      <li>~1100 tracepoints, ~600 syscalls, nfs, ext4, power, sched, etc</li>
+      <li>perf, ftrace, systemtap, strace, ktap, ebpf, dtrace, sysdig</li>
+      <li>LTTNG <b>2.x</b></li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+    <h2>Syscalls</h2>
+		<ul>
+			<li>kernel -> userspace API</li>
+			<li>GNU C library - glibc wrapper around syscalls</li>
+      <li>Linux API stable for decades, new calls introduced conservatively</li> <!-- no stability in-kernel apis -->
+      <li><code>open, connect, accept, read, select/poll</code></li>
+      <li><code>sys_enter_open, sys_exit_open, sys_enter_connect, sys_exit_connect, etc</code></li>
+      <li><a href="http://lwn.net">LWN</a> <a href="http://kernelnewbies.org/">kernelnewbies.org</a> <a href="http://www.amazon.com/Linux-Kernel-Development-3rd-Edition/dp/0672329468">Linux Kernel Development</a></li>
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+    <h2>LTTNG 2.x</h2>
+		<ul>
+			<li><a href="http://lttng.org">Linux Trace Tool Next Generation</a></li>
+			<li>Suite of tools to trace linux kernel and user applications</li>
+      <li>Very low overhead, 10 years of actice development, embedded background</li>
+      <li>Easy to install, runs anywhere</li>
+      <li>Tracer and viewers</li>
+      <li>Mathieu Desnoyers - efficios.com</li>
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+    <h2>LTTNG Components</h2>
+		<ul>
+			<li>lttng-modules: kernel tracer</h2></li>
+			<li>lttng-ust: user space trace, in process</li>
+      <li>lttng-tools:</li>
+      <ul>
+        <li>cli, lttng-ctl</li>
+        <li>lttng-sessiond registry daemon</li>
+        <li>lttng-consumerd extract trace data</li>
+        <li>lttng-relayd: network streaming daemon</li>
+      </ul>
+		</ul>
+	</div></section>
+
+  <section class="slide cover" id="Picture"><div>
+    <div><img src="pictures/lttng.png" alt=""></div>
+  </div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG Viewers</h2>
+		<ul>
+			<li>BabelTrace: cli text viewer</li>
+			<li>TraceCompass: Eclipse based front end</li>
+      <li>Python Bindings</li>
+      <li>Node ??</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG Kernel Demo</h2>
+		<ul>
+			<li><code>lttng create my-session</code></li>
+      <li><code>lttng enable-event --kernel --all</code></li>
+      <li><code>lttng add-context -k -t pid -t vpid</code></li>
+      <li><code>lttng start</code></li>
+      <li><code>do stuff!</code></li>
+      <li><code>lttng stop</code></li>
+      <li><code>lttng destroy</code></li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG Kernel Demo - TODO</h2>
+	</div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG - UST</h2>
+		<ul>
+			<li>User Space Tracing</li>
+			<li>Instrument your app with your own tracepoints</li>
+      <li>c/c++ - same TRACE_EVENT macro</li>
+      <li>liblttng-ust</li>
+      <li>Same as kernel: session setup, run app, collect traces</li>
+      <li>View/analyse traces, etc</li>
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+    <h2>Tracepoint - hello.tp - TODO - embed gist</h2>
+    <code>
+      TRACEPOINT_EVENT(<br>
+        hello_world,<br>
+        my_first_tracepoint,<br>
+      TP_ARGS(<br>
+      int, my_integer_arg,<br>
+      char*, my_string_arg<br>
+      ),<br>
+      TP_FIELDS(<br>
+      ctf_string(my_string_field, my_string_arg)<br>
+      ctf_integer(int, my_integer_field, my_integer_arg)<br>
+      )<br>
+      )<br>
+      ...<br>
+      ...<br>
+      tracepoint(hello_world, my_first_tracepoint, 23, "hi there!");<br>
+    </code>
+	</div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG Tracepoints in node.js</h2>
+		<ul>
+			<li>Added LTTNG Tracepoints in node itself</li>
+			<li>Landed in io.js v1.02 - <a href="https://github.com/iojs/io.js/pull/702">#702</a>r</li>
+      <li>Based on existing code for dtrace and etw</li>
+      <li><code>http_server_request, http_server_response</code></li>
+      <li><code>http_client_request, http_client_response</code></li>
+      <li><code>net_server_connection, net_stream_end</code></li>
+      <li><code>gc_start, gc_done</code></li>
+      <li>DEMO</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2><img style="max-width:60px; max-height:60px;" src="pictures/iojs2.png" alt=""> io.js FTW!</h2>
+		<ul>
+			<li><a href="https://github.com/iojs/io.js/blob/v1.x/GOVERNANCE.md#readme">Open Governance Model</a> (vs corporate stewardship)</li>
+			<li><a href="http://roadmap.iojs.org/">Roadmap</a> is company/industry driven</li>
+			<li>Various working groups:</li>
+      <ul>
+        <li>Stability</li>  <!-- track V8, semver, NAN -->
+        <li>NG, Streams, Release, Localisation</li>
+        <li>Debugging and Tracing</li>
+      </ul>
+			<li>Node Foundation & reconciliation</li>  <!-- LTS -->
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+		<h2><img style="max-width:60px; max-height:60px;" src="pictures/iojs2.png" alt=""> io.js Debugging and Tracing</h2>
+		<ul>
+      <li><a href="https://github.com/iojs/tracing-wg">Tracing Working Group</a></li>
+			<li><a href="https://codereview.chromium.org/827993003">Trace Event</a></li>
+      <ul>
+        <li>Chromium Team - Tracing Interface for V8</li>
+        <li>Part 1: Embedding API </li>
+        <li>Part 2: Control API </li>
+        <li>Async, doesn't call when probe is fired</li>
+        <li>Next gen debug & profiling tools</li>
+      </ul>
+      <li><a href="http://blog.trevnorris.com/2015/02/asyncwrap-tutorial-introduction.html">Async Wrap</a></li>
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+    <h2>Node.js App Tracepoints</h2>
+		<ul>
+			<li>Adding your own tracepoints challenging..</li>
+			<li><a href="https://github.com/nearform/bunyan-nftrace">Bunyan - Tracepoint log event</a></li>
+      <li><a href="https://github.com/nearform/nftrace-scaffold">Scaffold - Tracepoint Generator</a></li>
+      <li><a href="https://github.com/nearform/grunt-nftrace-gen">Grunt - Wrapper around Scaffold</a></li>
+      <li>Tracepoint Daemon Thingy - TODO</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+    <h2>LTTNG - the great!</h2>
+		<ul>
+			<li>High performance low impact tracer TODO - perf comparison with dtrace</li>
+			<li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+		</ul>
+	</div></section>
+
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="shower/shower.min.js"></script>
+	<!-- Copyright © 2014 Yours Truly, Famous Inc. -->
+	<!-- Photos by John Carey, fiftyfootshadows.net -->
+</body>
+</html>
