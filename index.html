@@ -15,7 +15,7 @@
 	</header>
 	<section class="slide cover" id="Cover"><div>
 		<h2>Tracing Node on Linux with LTTNG</h2>
-		<p><a href="http://twitter.com/dberesford">Damian Beresford</a> - <a href="http://nearform.com">nearForm</a></p>
+		<p><a href="http://twitter.com/dberesford">@dberesford</a> - <a href="http://nearform.com">nearForm</a></p>
 		<p><a href="http://www.nodejsdublin.com/">Node JS Dublin - March 2015</a></p>
     <p><a href="http://bit.ly/1GPk0cx">bit.ly/1GPk0cx</a></p>
 		<img src="pictures/spacex1.jpg" alt="">
@@ -64,28 +64,17 @@
       <li>User apps and kernel can be traced together</li>
 		</ul>
 	</div></section>
-  <!-- TODO - need image here -->
-  <section class="slide"><div>
-    <h2> DTrace - the unicorn!</h2>
-		<ul>
-			<li>Solaris Dynamic Tracing Framework</li>
-			<li>'Combines system performance statistics, debugging information, and execution analysis into one tool'</li>
-      <li>D scripts.</li>
-      <li>Huge amount of development - very well marketed, release in 2005</li>
-      <li>Brendan Gregg - <a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
-		</ul>
-	</div></section>
 	<section class="slide"><div>
     <h2>Linux Tracing</h2>
 		<ul>
-			<li>dtrace envy..</li>
-			<li>kernel markers 2007, kprobes, uprobes</li>
+			<li>2005 <a href="http://dtrace.org/">dtrace</a> envy..</li>
+			<li>kernel markers, kprobes, uprobes</li>
       <li>TRACE_EVENT macro</li>
       <li>debugfs - ram based fs for debugging</li>
       <li><code>sudo find /sys/kernel/debug/tracing/events -type d</code></li>
       <li>~1100 tracepoints, ~600 syscalls, nfs, ext4, power, sched, etc</li>
-      <li>perf, ftrace, systemtap, strace, ktap, ebpf, dtrace, sysdig</li>
-      <li>LTTNG <b>2.x</b></li>
+      <li>perf, ftrace, systemtap, strace, ktap, ebpf, dtrace, sysdig, <b>LTTNG</b></li>
+      <li>See Brendan Gregg - <a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
 		</ul>
 	</div></section>
 	<section class="slide"><div>
@@ -105,7 +94,7 @@
 		<ul>
 			<li><a href="http://lttng.org">Linux Trace Tool Next Generation</a></li>
 			<li>Suite of tools to trace linux kernel and user applications</li>
-      <li>Very low overhead, 10 years of actice development, embedded background</li>
+      <li>Very low overhead, 10 years of active development, embedded background</li>
       <li>Easy to install, runs anywhere</li>
       <li>Tracer and viewers</li>
       <li>Mathieu Desnoyers - efficios.com</li>
@@ -128,7 +117,7 @@
 	</div></section>
 
   <section class="slide cover" id="Picture"><div>
-    <div><img src="pictures/lttng.png" alt=""></div>
+    <img width="100%" height="100%" align="center" src="pictures/lttng.png">
   </div></section>
 
 	<section class="slide"><div>
@@ -137,7 +126,7 @@
 			<li>BabelTrace: cli text viewer</li>
 			<li>TraceCompass: Eclipse based front end</li>
       <li>Python Bindings</li>
-      <li>Node ??</li>
+      <li><a href="https://github.com/lttng/lttng-analyses">github.com/lttng/lttng-analyses</a></li>
 		</ul>
 	</div></section>
 
@@ -155,10 +144,6 @@
 	</div></section>
 
 	<section class="slide"><div>
-    <h2>LTTNG Kernel Demo - TODO</h2>
-	</div></section>
-
-	<section class="slide"><div>
     <h2>LTTNG - UST</h2>
 		<ul>
 			<li>User Space Tracing</li>
@@ -171,38 +156,40 @@
 	</div></section>
 
   <section class="slide"><div>
-    <h2>Tracepoint - hello.tp - TODO - embed gist</h2>
-    <code>
-      TRACEPOINT_EVENT(<br>
-        hello_world,<br>
-        my_first_tracepoint,<br>
-      TP_ARGS(<br>
-      int, my_integer_arg,<br>
-      char*, my_string_arg<br>
-      ),<br>
-      TP_FIELDS(<br>
-      ctf_string(my_string_field, my_string_arg)<br>
-      ctf_integer(int, my_integer_field, my_integer_arg)<br>
-      )<br>
-      )<br>
-      ...<br>
-      ...<br>
-      tracepoint(hello_world, my_first_tracepoint, 23, "hi there!");<br>
-    </code>
+    <h2>Tracepoint - hello.tp</h2>
+    <pre style="font-size:small"><code>
+      TRACEPOINT_EVENT(
+        hello_world,
+        my_first_tracepoint,
+      TP_ARGS(
+        int, my_integer_arg,
+        char*, my_string_arg
+      ), TP_FIELDS(
+        ctf_string(my_string_field, my_string_arg)
+        ctf_integer(int, my_integer_field, my_integer_arg)
+        )
+      )
+      ...
+      <mark>tracepoint(hello_world, my_first_tracepoint, 23, "hi there!");</mark>
+    </code></pre>
 	</div></section>
 
 	<section class="slide"><div>
     <h2>LTTNG Tracepoints in node.js</h2>
 		<ul>
 			<li>Added LTTNG Tracepoints in node itself</li>
-			<li>Landed in io.js v1.02 - <a href="https://github.com/iojs/io.js/pull/702">#702</a>r</li>
+			<li>Landed in io.js v1.02 - <a href="https://github.com/iojs/io.js/pull/702">#702</a></li>
       <li>Based on existing code for dtrace and etw</li>
       <li><code>http_server_request, http_server_response</code></li>
       <li><code>http_client_request, http_client_response</code></li>
       <li><code>net_server_connection, net_stream_end</code></li>
       <li><code>gc_start, gc_done</code></li>
-      <li>DEMO</li>
+      <li>Demo!</li>
 		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+     <img width="100%" height="100%" align="center" src="pictures/demo.gif">      
 	</div></section>
 
 	<section class="slide"><div>
@@ -212,11 +199,10 @@
 			<li><a href="http://roadmap.iojs.org/">Roadmap</a> is company/industry driven</li>
 			<li>Various working groups:</li>
       <ul>
-        <li>Stability</li>  <!-- track V8, semver, NAN -->
-        <li>NG, Streams, Release, Localisation</li>
+        <li>Stability, NG, Streams, Release, Localisation</li>
         <li>Debugging and Tracing</li>
       </ul>
-			<li>Node Foundation & reconciliation</li>  <!-- LTS -->
+			<li>Node Foundation & reconciliation proposal</li>
 		</ul>
 	</div></section>
 
@@ -237,37 +223,69 @@
 	</div></section>
 
   <section class="slide"><div>
-    <h2>Node.js App Tracepoints</h2>
+    <h2>Node.js App Tracepoints - nftrace</h2>
 		<ul>
-			<li>Adding your own tracepoints challenging..</li>
-			<li><a href="https://github.com/nearform/bunyan-nftrace">Bunyan - Tracepoint log event</a></li>
-      <li><a href="https://github.com/nearform/nftrace-scaffold">Scaffold - Tracepoint Generator</a></li>
-      <li><a href="https://github.com/nearform/grunt-nftrace-gen">Grunt - Wrapper around Scaffold</a></li>
-      <li>Tracepoint Daemon Thingy - TODO</li>
+			<li><a href="https://github.com/nearform/bunyan-nftrace">Bunyan</a> - Tracepoint log event</li>
+      <li><a href="https://github.com/nearform/nftrace-scaffold">Scaffold</a> - Tracepoint Generator</li>
+      <li><a href="https://github.com/nearform/grunt-nftrace-gen">Grunt</a> - Wrapper around Scaffold</li>
+      <li><a href="https://github.com/nearform/seneca-nftrace">Seneca</a> - Trace all messages</li>
+      <li><a href="https://github.com/nearform/nftrace-web-controller">Web Controller</a> - tracepoint streamer</li>
+      <li><a href="https://github.com/nearform/lttng-vagrant">Vagrant sandbox</a> - set up all the things</li>
 		</ul>
 	</div></section>
 
 	<section class="slide"><div>
-    <h2>LTTNG - the great!</h2>
+    <h2>LTTNG - quick review!</h2>
 		<ul>
-			<li>High performance low impact tracer TODO - perf comparison with dtrace</li>
-			<li></li>
+      <!-- http://www.dorsal.polymtl.ca/fr/blog/yannick-brosseau/userspace-tracing-comparison-dtrace-vs-lttng-ust 
+           http://www.efficios.com/pub/endusersummit2012/presentation-enduser2012.pdf
+        -->
+			<li>High performance low impact tracer</li>
+			<li>Kernel and userland</li>
+      <li>Turn on/off without process restart</li>
+      <li>Remote tracing</li>
+      <li>Live tracing</li>
+      <li>Flight recorder</li>
+      <li>Common Trace Format</li>
+      <li>Kernel tree?</li>
+		</ul>
+	</div></section>
+
+  <section class="slide"><div>
+    <h2>Monitoring & Metrics</h2>
+		<ul>
+			<li><a href="http://www.slac.stanford.edu/xorg/nmtf/nmtf-tools.html">Network Monitoring Tools</a></li>
+      <li><a href="http://www.gartner.com/technology/reprints.do?id=1-23QQOPU&ct=141029&st=sb">Magic Quadrant for Application Performance Monitoring</a></li>
+      <li>Monitoring Categories: Functional, Time Series, Event</li>
+      <li>
+      <li>Or: Who, How, What & Why</li>
+      <li>Firehose! - Big Data approach</li>
+      <li>Semantic/Business Monitoring</li>
+      <li><a href="http://prometheus.io/">prometheus.io</a></li>
+      <li><a href="http://techblog.netflix.com/2015/02/a-microscope-on-microservices.html">Netflix - A Microscope on Microservices</a></li>
+      <li> .. built on <a href="https://perf.wiki.kernel.org/index.php/Main_Page">perf</a> and <a href="http://www.pcp.io/">Performance Co-Pilot</a></li>
+      <li>Our next challenge.. </li>
       <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+		</ul>
+	</div></section>
+  
+	<section class="slide"><div>
+    <h2>Finally..</h2>
+		<ul>
+      <li>Tracing interesting area and evolving rapidly..</li>
+      <li><a href="https://github.com/iojs/tracing-wg">Node Tracing & Debugging Working Group</a></li>
+      <li><a href="http://diamon.org/">DiaMon</a> - Linux Foundation Diagnostic & Monitoring Group</li>
+      <li><a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
+      <li><a href="http://www.nearform.com/nodecrunch/tag/hiring/">nearForm are hiring!</a></li>
 		</ul>
 	</div></section>
 
 	<!--
 		To hide progress bar from entire presentation
 		just remove “progress” element.
-		-->
+
 	<div class="progress"><div></div></div>
+		-->
 	<script src="shower/shower.min.js"></script>
-	<!-- Copyright © 2014 Yours Truly, Famous Inc. -->
-	<!-- Photos by John Carey, fiftyfootshadows.net -->
 </body>
 </html>
