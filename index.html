@@ -72,13 +72,13 @@
 	<section class="slide"><div>
     <h2>Linux Tracing</h2>
 		<ul>
-			<li>2005 <a href="http://dtrace.org/">dtrace</a> envy..</li>
+			<li>2005 <a href="http://dtrace.org/">dtrace</a>..</li>
 			<li>kernel markers, kprobes, uprobes</li>
       <li>TRACE_EVENT macro</li>
       <li>debugfs - ram based fs for debugging</li>
       <li><code>sudo find /sys/kernel/debug/tracing/events -type d</code></li>
       <li>~1100 tracepoints, ~600 syscalls, nfs, ext4, power, sched, etc</li>
-      <li>perf, ftrace, systemtap, strace, ktap, ebpf, dtrace, sysdig, <b>LTTNG</b></li>
+      <li>perf, ftrace, systemtap, strace, ktap, eBPF, dtrace, sysdig, <b>LTTNG</b></li>
       <li>See Brendan Gregg - <a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
 		</ul>
 	</div></section>
@@ -97,12 +97,12 @@
   <section class="slide"><div>
     <h2>LTTNG 2.x</h2>
 		<ul>
+      <li>Mathieu Desnoyers - efficios.com</li>
 			<li><a href="http://lttng.org">Linux Trace Tool Next Generation</a></li>
 			<li>Suite of tools to trace linux kernel and user applications</li>
       <li>Very low overhead, 10 years of active development, embedded background</li>
       <li>Easy to install, runs anywhere</li>
       <li>Tracer and viewers</li>
-      <li>Mathieu Desnoyers - efficios.com</li>
 		</ul>
 	</div></section>
 
@@ -249,10 +249,10 @@
 			<li>Kernel and userland</li>
       <li>Turn on/off without process restart</li>
       <li>Remote tracing</li>
-      <li>Live tracing</li>
-      <li>Flight recorder</li>
+      <li>Flight recorder & live tracing</li>
       <li>Common Trace Format</li>
       <li>Kernel tree?</li>
+      <li>Trace the whole stack?</li>
 		</ul>
 	</div></section>
 
@@ -275,7 +275,7 @@
 	<section class="slide"><div>
     <h2>Finally..</h2>
 		<ul>
-      <li>Tracing interesting area and evolving rapidly..</li>
+      <li>Interesting area and evolving rapidly.. also watch perf, eBPF, & unikernels!</li>
       <li><a href="https://github.com/iojs/tracing-wg">Node Tracing & Debugging Working Group</a></li>
       <li><a href="http://diamon.org/">DiaMon</a> - Linux Foundation Diagnostic & Monitoring Group</li>
       <li><a href="http://www.brendangregg.com/">www.brendangregg.com</a></li>
