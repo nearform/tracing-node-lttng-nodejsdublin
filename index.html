@@ -39,7 +39,15 @@
 				}
 				#Cover p a {
 					color:#FFF;
-					}
+			}
+      .slide {
+        background-image: url("pictures/nearform.png");
+        background-position: right bottom;
+        background-repeat: no-repeat;
+      }
+      #NoBackground {
+        background-image: none;
+      }
 		</style>
   </div></section>
 	<section class="slide"><div>
@@ -131,13 +139,13 @@
 	</div></section>
 
 	<section class="slide"><div>
-    <h2>LTTNG Kernel Demo</h2>
+    <h2>Kernel Tracing Example..</h2>
 		<ul>
 			<li><code>lttng create my-session</code></li>
       <li><code>lttng enable-event --kernel --all</code></li>
       <li><code>lttng add-context -k -t pid -t vpid</code></li>
       <li><code>lttng start</code></li>
-      <li><code>do stuff!</code></li>
+      <li><code><b>do stuff!</b></code></li>
       <li><code>lttng stop</code></li>
       <li><code>lttng destroy</code></li>
 		</ul>
@@ -156,7 +164,7 @@
 	</div></section>
 
   <section class="slide"><div>
-    <h2>Tracepoint - hello.tp</h2>
+    <h2>Tracepoint Macro..</h2>
     <pre style="font-size:small"><code>
       TRACEPOINT_EVENT(
         hello_world,
@@ -175,10 +183,10 @@
 	</div></section>
 
 	<section class="slide"><div>
-    <h2>LTTNG Tracepoints in node.js</h2>
+    <h2>LTTNG Tracepoints in node.js/io.js</h2>
 		<ul>
-			<li>Added LTTNG Tracepoints in node itself</li>
-			<li>Landed in io.js v1.02 - <a href="https://github.com/iojs/io.js/pull/702">#702</a></li>
+			<li>Added LTTNG Tracepoints in node/io.js </li>
+			<li>Landed in <a href="http://iojs.org">io.js</a> v1.02 - <a href="https://github.com/iojs/io.js/pull/702">#702</a></li>
       <li>Based on existing code for dtrace and etw</li>
       <li><code>http_server_request, http_server_response</code></li>
       <li><code>http_client_request, http_client_response</code></li>
@@ -188,7 +196,7 @@
 		</ul>
 	</div></section>
 
-	<section class="slide"><div>
+	<section class="slide" id="NoBackground"><div>
      <img width="100%" height="100%" align="center" src="pictures/demo.gif">      
 	</div></section>
 
